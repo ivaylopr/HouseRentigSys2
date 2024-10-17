@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseRentigSys2", "HouseRentigSys2\HouseRentigSys2.csproj", "{86A09398-4017-4D45-83B4-00A20A8D6893}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HouseRentigSys2", "HouseRentigSys2\HouseRentigSys2.csproj", "{86A09398-4017-4D45-83B4-00A20A8D6893}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseRentingSys2.Core", "HouseRentingSys2.Core\HouseRentingSys2.Core.csproj", "{3AA504A8-478D-42EA-A84D-7C7B8F9A6412}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseRentingSys2.Infrastructure", "HouseRentingSys2.Infrastructure\HouseRentingSys2.Infrastructure.csproj", "{B3700AA3-71C4-488C-8E14-1775827929F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{86A09398-4017-4D45-83B4-00A20A8D6893}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86A09398-4017-4D45-83B4-00A20A8D6893}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86A09398-4017-4D45-83B4-00A20A8D6893}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AA504A8-478D-42EA-A84D-7C7B8F9A6412}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AA504A8-478D-42EA-A84D-7C7B8F9A6412}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AA504A8-478D-42EA-A84D-7C7B8F9A6412}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AA504A8-478D-42EA-A84D-7C7B8F9A6412}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3700AA3-71C4-488C-8E14-1775827929F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3700AA3-71C4-488C-8E14-1775827929F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3700AA3-71C4-488C-8E14-1775827929F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3700AA3-71C4-488C-8E14-1775827929F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
