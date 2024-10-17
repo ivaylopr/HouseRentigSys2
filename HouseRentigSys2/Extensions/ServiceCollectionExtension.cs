@@ -1,7 +1,6 @@
-﻿using HouseRentigSys2.Data;
+﻿using HouseRentigSys2.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.CompilerServices;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
