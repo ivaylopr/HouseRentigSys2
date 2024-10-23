@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HouseRentingSys2.Infrastructure.Migrations
 {
     [DbContext(typeof(HouseRentingDbContext))]
-    [Migration("20241017155936_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20241018060954_DomainTableAdded")]
+    partial class DomainTableAdded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,114 @@ namespace HouseRentingSys2.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("HouseRentingSys2.Infrastructure.Data.Models.Agent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("Agent identifier");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)")
+                        .HasComment("Agent phone number");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasComment("User Identityfier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Agents");
+                });
+
+            modelBuilder.Entity("HouseRentingSys2.Infrastructure.Data.Models.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("Category identifier");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("Category Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+
+                    b.HasComment("House category");
+                });
+
+            modelBuilder.Entity("HouseRentingSys2.Infrastructure.Data.Models.House", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("House identitfier");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)")
+                        .HasComment("House address");
+
+                    b.Property<int>("AgentId")
+                        .HasColumnType("int")
+                        .HasComment("Agent identifier");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int")
+                        .HasComment("Category indentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
+                        .HasComment("House description");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("House image");
+
+                    b.Property<decimal>("PricePerMonth")
+                        .HasColumnType("decimal(18,2)")
+                        .HasComment("House renting price for month");
+
+                    b.Property<string>("RenterId")
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("User id of the renter");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AgentId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Houses");
+
+                    b.HasComment("House for rent");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -226,6 +334,36 @@ namespace HouseRentingSys2.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("HouseRentingSys2.Infrastructure.Data.Models.Agent", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("HouseRentingSys2.Infrastructure.Data.Models.House", b =>
+                {
+                    b.HasOne("HouseRentingSys2.Infrastructure.Data.Models.Agent", "Agent")
+                        .WithMany("Houses")
+                        .HasForeignKey("AgentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HouseRentingSys2.Infrastructure.Data.Models.Category", "Category")
+                        .WithMany("Houses")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Agent");
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -275,6 +413,16 @@ namespace HouseRentingSys2.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("HouseRentingSys2.Infrastructure.Data.Models.Agent", b =>
+                {
+                    b.Navigation("Houses");
+                });
+
+            modelBuilder.Entity("HouseRentingSys2.Infrastructure.Data.Models.Category", b =>
+                {
+                    b.Navigation("Houses");
                 });
 #pragma warning restore 612, 618
         }
