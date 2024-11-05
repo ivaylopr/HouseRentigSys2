@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HouseRentigSys2.Controllers
 {
 	[Authorize]
-	public class HouseController : Controller
+	public class HouseController : BaseController
 	{
 		[AllowAnonymous]
 		[HttpGet]
