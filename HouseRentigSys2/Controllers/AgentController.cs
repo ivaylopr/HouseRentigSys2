@@ -1,9 +1,8 @@
-﻿using HouseRentigSys2.Extensions;
-using HouseRentingSys2.Core.Contracts;
+﻿using HouseRentingSys2.Core.Contracts;
 using HouseRentingSys2.Core.Models.Agent;
-using HouseRentingSys2.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace HouseRentigSys2.Controllers
 {
