@@ -1,17 +1,30 @@
-﻿using HouseRentingSys2.Core.Models.House;
+﻿using HouseRentigSys2.Attributes;
+using HouseRentingSys2.Core.Contracts;
+using HouseRentingSys2.Core.Models.House;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace HouseRentigSys2.Controllers
 {
 	[Authorize]
 	public class HouseController : BaseController
 	{
-		[AllowAnonymous]
+		private readonly IHouseService houseService;
+		private readonly IAgentService agentService;
+        public HouseController(IHouseService _houseService,
+			IAgentService _agentService)
+        {
+            houseService= _houseService;
+			agentService= _agentService;
+        }
+		 
+        [AllowAnonymous]
 		[HttpGet]
 		public async Task<IActionResult> All()
 		{
 			var model = new AllHousesQueryModel();
+
 			return View(model);
 		}
 		[HttpGet]
@@ -29,15 +42,44 @@ namespace HouseRentigSys2.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Add()
+        [MustBeAgent]
+        public async Task<IActionResult> Add()
 		{
-			return View();
+			if (await agentService.ExistsByIdAsync(User.Id())==false)
+			{
+				return RedirectToAction(nameof(AgentController.Become),"Agent");
+			}
+
+			var model = new HouseFormModel()
+			{
+				Categories = await houseService.AllCategoriesAsync()
+			};
+
+			return View(model);
 		}
 
+
 		[HttpPost]
+		[MustBeAgent]
 		public async Task<IActionResult> Add(HouseFormModel model)
 		{
-			return RedirectToAction(nameof(Details), new { id = 1 });
+			if (await houseService.CategoryExistsAsync(model.CategoryId)==false)
+			{
+				ModelState.AddModelError(nameof(model.CategoryId), "");
+			}
+
+			if (ModelState.IsValid == false)
+			{
+				model.Categories = await houseService.AllCategoriesAsync();
+
+				return View(model);
+			}
+
+			int? agentId = await agentService.GetAgentIdAsync(User.Id());
+
+			int newHouseId = await houseService.CreateAsync(model, agentId ?? 0);
+
+			return RedirectToAction(nameof(Details), new { id = newHouseId });
 		}
 
 		[HttpGet]

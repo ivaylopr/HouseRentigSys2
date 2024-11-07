@@ -12,7 +12,7 @@ namespace HouseRentingSys2.Infrastructure.Data.Models
         [Key]
         [Comment("House identitfier")]
         public int Id { get; set; }
-        [MaxLength(TitleMaxLength)]
+        [MaxLength(HouseTitleMaxLength)]
         [Comment("Title")]
         public string Title { get; set; } = string.Empty;
         [Required]
