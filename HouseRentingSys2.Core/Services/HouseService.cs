@@ -126,6 +126,13 @@ namespace HouseRentingSys2.Core.Services
             return house.Id;
         }
 
+        public async Task DeleteAsync(int houseId)
+        {
+           
+            await repository.DeleteAsync<House>(houseId);
+            await repository.SaveChangesAsync();
+        }
+
         public async Task EditAsync(int houseId, HouseFormModel model)
         {
             var house = await repository.GetByIdAsync<House>(houseId);
